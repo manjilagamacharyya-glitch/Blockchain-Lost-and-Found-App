@@ -1,0 +1,14 @@
+# Environment files (extra safety net at root level)
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Hardhat
+contracts/artifacts/
+contracts/cache/
+
+# Vite build output
+frontend/dist/
