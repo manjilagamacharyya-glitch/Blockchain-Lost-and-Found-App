@@ -30,15 +30,23 @@ Every report, claim, and resolution is a real transaction recorded permanently o
 
 ## Project Structure
 
-lostfound-dapp/
-├── contracts/          # Hardhat project — Solidity contract + tests + deployment
-│   ├── contracts/LostAndFound.sol
-│   ├── test/LostAndFound.ts
-│   └── ignition/modules/LostAndFound.ts
-└── frontend/           # React app
-└── src/
-├── components/ (WalletConnect, ReportForm, ItemList, ItemCard)
-└── utils/      (contract.js, ipfs.js, contractConfig.js)
+    lostfound-dapp/
+      contracts/
+        contracts/LostAndFound.sol
+        test/LostAndFound.ts
+        ignition/modules/LostAndFound.ts
+
+      frontend/
+        src/
+          components/
+            WalletConnect.jsx
+            ReportForm.jsx
+            ItemList.jsx
+            ItemCard.jsx
+          utils/
+            contract.js
+            ipfs.js
+            contractConfig.js
 
 
 ## Running locally
