@@ -14,6 +14,7 @@ contract LostAndFound {
         uint timestamp;
         Status status;
         address claimant;
+        string claimProof;
     }
 
     uint public itemCount;
@@ -40,14 +41,16 @@ contract LostAndFound {
             _location,
             block.timestamp,
             _status,
-            address(0)
+            address(0),
+            ""
         );
         emit ItemReported(itemCount, msg.sender, _status);
     }
 
-    function submitClaim(uint _id) external {
+    function submitClaim(uint _id, string memory _proof) external {
         require(items[_id].status == Status.Found, "Not claimable");
         items[_id].claimant = msg.sender;
+        items[_id].claimProof = _proof;
         items[_id].status = Status.Claimed;
         emit ClaimSubmitted(_id, msg.sender);
     }
@@ -63,6 +66,7 @@ contract LostAndFound {
         } else {
             it.status = Status.Found;
             it.claimant = address(0);
+            it.claimProof = "";
         }
     }
 

@@ -13,6 +13,24 @@ function App() {
     if (account) loadItems();
   }, [account]);
 
+  useEffect(() => {
+  if (!window.ethereum) return;
+
+  function handleAccountsChanged(accounts) {
+    if (accounts.length === 0) {
+      setAccount(null);
+    } else {
+      setAccount(accounts[0]);
+    }
+  }
+
+  window.ethereum.on("accountsChanged", handleAccountsChanged);
+
+  return () => {
+    window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
+  };
+}, []);
+
   async function loadItems() {
     try {
       setLoading(true);
@@ -30,18 +48,18 @@ function App() {
     }
   }
 
-  async function handleClaim(itemId) {
-    try {
-      const contract = await getContract();
-      const tx = await contract.submitClaim(itemId);
-      await tx.wait();
-      alert("Claim submitted successfully!");
-      loadItems();
-    } catch (error) {
-      console.error("Failed to submit claim:", error);
-      alert("Failed to submit claim. See console for details.");
-    }
+  async function handleClaim(itemId, proofText) {
+  try {
+    const contract = await getContract();
+    const tx = await contract.submitClaim(itemId, proofText);
+    await tx.wait();
+    alert("Claim submitted successfully!");
+    loadItems();
+  } catch (error) {
+    console.error("Failed to submit claim:", error);
+    alert("Failed to submit claim. See console for details.");
   }
+}
 
   async function handleResolve(itemId, approve) {
     try {
